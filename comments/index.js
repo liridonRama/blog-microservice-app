@@ -26,7 +26,7 @@ app.post('/posts/:id/comments', async (req, res) => {
     commentsByPostId[postId] = [];
   }
 
-  commentsByPostId[postId].push({ id, content });
+  commentsByPostId[postId].push({ id, content, status: 'pending' });
 
   await axios
     .post('http://localhost:4005/events', {
