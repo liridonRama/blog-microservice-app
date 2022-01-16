@@ -1,9 +1,7 @@
-FROM node:alpine
+FROM golang:alpine
 
 WORKDIR /app
-COPY package.json ./
-RUN npm install
 COPY ./ ./
+RUN go build main.go
 
-
-CMD ["npm", "start"]
+CMD ["./main"]
