@@ -55,7 +55,7 @@ app.listen(4002, async () => {
 
   const res = await axios.get('http://event-bus-srv:4005/events').catch(console.log);
 
-  if (!res) {
+  if (!res?.data) {
     return;
   }
 
