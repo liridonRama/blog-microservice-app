@@ -15,16 +15,19 @@ func main() {
 
 	http.HandleFunc("/events", getEvent)
 
+	log.Println("starting server on port 4005")
 	err := http.ListenAndServe(":4005", nil)
 	if err != nil {
 		log.Panicln(err)
 	}
-	log.Println("starting server on port 4005")
 }
 
 func getEvent(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodGet {
-		mEvents, _ := json.Marshal(events)
+		mEvents, err := json.Marshal(events)
+		if err != nil {
+			log.Println(err)
+		}
 
 		w.Write(mEvents)
 
