@@ -47,20 +47,20 @@ func getEvent(w http.ResponseWriter, req *http.Request) {
 
 		events = append(events, payload)
 
-		clients := []string{
+		clientUrls := []string{
 			"http://posts-clusterip-srv:4000/events",
 			"http://comments-srv:4001/events",
 			"http://query-srv:4002/events",
 			"http://moderation-srv:4003/events",
 		}
 
-		for _, client := range clients {
+		for _, cU := range clientUrls {
 			go func(client string) {
 				_, err := http.Post(client, "application/json", bytes.NewBuffer(body))
 				if err != nil {
 					log.Println(fmt.Errorf("error while trying to send message to %s service: %w", client, err))
 				}
-			}(client)
+			}(cU)
 		}
 	}
 }
